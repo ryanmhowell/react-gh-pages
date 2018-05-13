@@ -34,3 +34,16 @@
 #time {
   padding: 1em 1.5em;
 }
+
+label {
+  padding: 1em;
+}
+
+#am-radio, #pm-radio {
+  margin: 0.75em;
+}
+
+.weekday {
+  display: inline-block;
+  padding: 0.5em;
+}

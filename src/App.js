@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Description from "./components/Description.js";
+import MonthSelector from "./components/MonthSelector.js";
+import YearSelector from "./components/YearSelector.js";
+import Month from "./components/Month.js";
+import TimeSelector from "./components/TimeSelector.js";
+import Button from "./components/Button.js";
+import AppointmentList from "./components/AppointmentList.js";
+import AMPMSelector from './components/AMPMSelector';
+
+
 
    class App extends Component {
     constructor(props) { 
@@ -11,6 +21,8 @@ import './App.css';
       this.goToLastYear = this.goToLastYear.bind(this);
       this.addHour = this.addHour.bind(this);
       this.minusHour = this.minusHour.bind(this);
+      this.setAM = this.setAM.bind(this);
+      this.setPM = this.setPM.bind(this);
       this.state = {
        currentMonth: "January",
        month: ["January",
@@ -147,6 +159,22 @@ import './App.css';
     console.log(this.state.appointments);
   }
 
+
+    setAM = (props) => {
+      this.setState(prevState => ({
+        ampm: "AM"
+      }));
+    }
+
+
+    setPM = (props) => {
+      this.setState(prevState => ({
+        ampm: "PM"
+      }));
+    }
+
+
+
      render() {
        return(
         <div className="text-center">
@@ -171,227 +199,28 @@ import './App.css';
         addMinute={this.addMinute}
         minusHour={this.minusHour}
         minusMinute={this.minusMinute} />
+        <AMPMSelector ampm={this.state.ampm}
+        setAM={this.setAM}
+        setPM={this.setPM} />
         <Button addAppointment={this.addAppointment} />
         <AppointmentList appointments={this.state.appointments} />
       </div>
        )
-     }
-
-    
+      }
 
 
     }
 
 
 
-    const Description = (props) => {
-      return (
-        <div>
-          <br />
-          <input id="description" type="text" required placeholder="Description" />
-          <br />
-          <br />
-        </div>
-      )
-    };
-
-
-    const MonthSelector = (props) => {
-      return(
-        <div className="container">
-            <div className="row">
-              <div className="col-3">
-                <button className="btn btn-primary" 
-                onClick={props.goToLastMonth}>
-                  <i className="fa fa-arrow-left" />
-                </button>
-              </div>
-              <div className="col-6">
-              <h4>{props.currentMonth} {props.currentYear}</h4>
-              </div>
-              <div className="col-3">
-                <button className="btn btn-primary" 
-                onClick={props.goToNextMonth}>
-                  <i className="fa fa-arrow-right" />
-                </button>
-              </div>
-            </div>
-          </div>
-      )
-    };
-
-    const YearSelector = (props) => {
-      return(
-        <div>
-          <br />
-           <div className="container">
-             <div className="row">
-               <div className="col-3">
-                 <button className="btn btn-primary" 
-                 onClick={props.goToLastYear}>
-                 <i className="fa fa-arrow-left" />
-                 </button>
-               </div>
-               <h4 className="col-6">{props.currentYear}</h4>
-               <div className="col-3">
-                 <button className="btn btn-primary" 
-                 onClick={props.goToNextYear}>
-                 <i className="fa fa-arrow-right" />
-                 </button>
-               </div>
-             </div>
-           </div>
-          <br />
-        </div>
-      )
-    };
-
-
-  const Month = (props) => {
-      return(
-        <div>
-          <div className="container">
-            <div className="row">
-              <Week />
-            </div>
-            <div className="row">
-              <Week />
-            </div>
-            <div className="row">
-              <Week />
-            </div>
-            <div className="row">
-              <Week />
-            </div>
-            <div className="row">
-              <Week />
-            </div>
-          </div>
-        </div>
-      )
-    }
-  
-
-
-  class Week extends Component {
-    render() {
-      return(
-        <div>
-          <div className="container">
-          <div className="row">
-          <div className="col-3"></div>
-          <div className="col-1"><Day /></div>
-          <div className="col-1"><Day /></div>
-          <div className="col-1"><Day /></div>
-          <div className="col-1"><Day /></div>
-          <div className="col-1"><Day /></div>
-          <div className="col-1"><Day /></div>
-          <div className="col-1"><Day /></div>
-          </div>
-          </div>
-        </div>
-      )
-    }
-  }
-
-  const Day = () => {
-    return <div>
-        1
-      </div>
-  };
-
-  const TimeSelector = (props) => {
-      return (
-        <div>
-          <br />
-          <button className="btn btn-primary" 
-          onClick={props.addHour}>
-            <i className="fa fa-arrow-up" />
-          </button>
-          <button className="btn btn-primary" 
-          onClick={props.minusHour}>
-            <i className="fa fa-arrow-down" />
-          </button>
-          <span id="time">
-          {props.hours + " : "  
-          + (props.minutes < 10 ? "0" : "") + props.minutes 
-          + " " + props.ampm}
-          </span>
-          <button className="btn btn-primary" 
-          onClick={props.addMinute}>
-            <i className="fa fa-arrow-up" />
-          </button>
-          <button className="btn btn-primary" 
-          onClick={props.minusMinute}>
-            <i className="fa fa-arrow-down" />
-          </button>
-          <br />
-        </div>
-      )
-    }
-  
-
-  const Button = (props) => {
-      return(
-        <div>
-          <form onSubmit={props.addAppointment}>
-            <br />
-            <button className="btn btn-danger">Make Appointment</button>
-          </form>
-          <br />
-        </div>
-      )
-    }
-  
-
-
-  const AppointmentList = (props) => {
-    return(
-        <div>
-        {props.appointments.map((appointment) => {
-          <Appointment 
-          dayOfWeek={props.dayOfWeek}
-          dayOfMonth={props.dayOfMonth}
-          apmtDesc={props.apmtDesc}
-          apmtMonth={props.apmtMonth}
-          apmtYear={props.apmtYear}
-          apmtHours={props.apmtHours}
-          apmtMinutes={props.apmtMinutes}
-          apmtAmpm={props.apmtAmpm} />
-        })}
-        </div>
-      )
-    }
-  
-  
-
-const Appointment = (props) => {
-  return(
-    <div>
-    <h4>{props.dayOfWeek + ", "
-     + props.apmtMonth + " " 
-     + props.dayOfMonth + ", "
-     + props.apmtYear}</h4>
-     <h4>{props.apmtDesc}</h4>
-    </div>
-  )
-};
-
-
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className="App">
-//         <header className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <h1 className="App-title">Welcome to React</h1>
-//         </header>
-//         <p className="App-intro">
-//           To get started, edit <code>src/App.js</code> and save to reload.
-//         </p>
-//       </div>
-//     );
-//   }
-// }
 
 export default App;
+
+
+
+// async  await
+
+// Promise
+
+// fetch
+
