@@ -1,18 +1,20 @@
 import React, {Component} from "react";
 
-const Day = (props) => {
-
+class Day extends Component {
+  dayNumber = this.props.number;
+  
+  render() {
   return (
         <div className="weekday">
           <button 
-            className="btn" name="day" 
-            onClick={props.handleDayChange} 
-            number={props.number}>{props.number}
+            className="btn" 
+            onClick={(dayNumber) => this.props.handleDayChange(this.dayNumber)} 
+            number={this.props.number}>{this.props.number}
           </button>
         </div>
     )
   };
-
+}
 
 
 

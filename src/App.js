@@ -165,12 +165,11 @@ import AMPMSelector from './components/AMPMSelector';
       }));
     }
 
-    handleDayChange = (props) => {
-      let day = this.props.number;
+    handleDayChange = (dayNumber) => {
       this.setState({
-        day: day
+        day: dayNumber
       });
-      console.log(day);
+      console.log(dayNumber);
     }
 
 
