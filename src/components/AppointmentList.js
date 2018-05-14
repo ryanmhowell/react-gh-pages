@@ -1,20 +1,26 @@
-import React, {Component} from "react";
+import React from "react";
 import Appointment from "./Appointment.js";
 
-const AppointmentList = (props) => {
-    return(
+const AppointmentList = (props) => { 
+  let List = props.appointments;
+  List = List.map((appointment, i) =>
+    <Appointment key={i}
+    apmtDay={appointment.apmtDay}
+    apmtDesc={appointment.apmtDesc}
+    apmtMonth={appointment.apmtMonth}
+    apmtYear={appointment.apmtYear}
+    apmtHours={appointment.apmtHours}
+    apmtMinutes={appointment.apmtMinutes}
+    apmtAmpm={appointment.apmtAmpm} />
+    ) 
+  return(
         <div>
-        {props.appointments.map((appointment) => {
-          <Appointment 
-          dayOfWeek={props.dayOfWeek}
-          dayOfMonth={props.dayOfMonth}
-          apmtDesc={props.apmtDesc}
-          apmtMonth={props.apmtMonth}
-          apmtYear={props.apmtYear}
-          apmtHours={props.apmtHours}
-          apmtMinutes={props.apmtMinutes}
-          apmtAmpm={props.apmtAmpm} />
-        })}
+          <h3>Current List of Appointments</h3>
+          <div className="container">
+            <div className="row">
+            {List}
+            </div>
+          </div>
         </div>
       )
     };

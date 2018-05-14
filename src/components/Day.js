@@ -1,12 +1,18 @@
 import React, {Component} from "react";
 
 const Day = (props) => {
-    return (
+
+  return (
         <div className="weekday">
-         {props.number}
+          <button 
+            className="btn" name="day" 
+            onClick={props.handleDayChange} 
+            number={props.number}>{props.number}
+          </button>
         </div>
     )
   };
+
 
 
 

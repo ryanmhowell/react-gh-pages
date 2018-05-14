@@ -2,21 +2,57 @@ import React, {Component} from "react";
 //import Week from "./Week.js";
 import Day from "./Day.js";
 
-class Month extends Component {
-  state = {
-    numOfDays: [1,2,3,4,5,6,7]
-  };
-  
+const Month = (props) => {
 
-  render() { 
   return(
       <div>
         <div className="container">
           <div className="row">
             <div className="col-12">
-              {this.state.numOfDays.map((day,i) => <Day key={i} number={i+1} />)}
+              {props.week1.map((day,i) => <Day  
+              key={i}  
+              number={day}
+              value={day}
+              handleDayChange={props.handleDayChange}/>)}
             </div>
           </div>
+          <div className="row">
+            <div className="col-12">
+              {props.week2.map((day,i) => <Day  
+              key={i} 
+              number={day}
+              value={day}
+              handleDayChange={props.handleDayChange}/>)}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              {props.week3.map((day,i) => <Day  
+              key={i} 
+              number={day} 
+              value={day}
+              handleDayChange={props.handleDayChange}/>)}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              {props.week4.map((day,i) => <Day  
+              key={i} 
+              number={day} 
+              value={day}
+              handleDayChange={props.handleDayChange}/>)}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              {props.week5.map((day,i) => <Day 
+              key={i} 
+              number={day} 
+              value={day}
+              handleDayChange={props.handleDayChange}/>)}
+            </div>
+          </div>
+         
           {/* <div className="row">
             <Week currentMonth={props.currentMonth} />
           </div>
@@ -30,6 +66,6 @@ class Month extends Component {
       </div>
     )
   }
-  };
+  
 
   export default Month;

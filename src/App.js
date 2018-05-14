@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import Description from "./components/Description.js";
 import MonthSelector from "./components/MonthSelector.js";
@@ -23,9 +23,15 @@ import AMPMSelector from './components/AMPMSelector';
       this.minusHour = this.minusHour.bind(this);
       this.setAM = this.setAM.bind(this);
       this.setPM = this.setPM.bind(this);
+      this.handleDayChange = this.handleDayChange.bind(this);
       this.state = {
-       currentMonth: "January",
-       month: ["January",
+        week1: [1,2,3,4,5,6,7],
+        week2: [8,9,10,11,12,13,14],
+        week3: [15,16,17,18,19,20,21],
+        week4: [22,23,24,25,26,27,28],
+        week5: [29,30,31],
+        currentMonth: "January",
+        month: ["January",
         "February",
         "March",
         "April",
@@ -38,19 +44,29 @@ import AMPMSelector from './components/AMPMSelector';
         "November",
         "December"
     ],
-       currentYear: 2018, 
+       currentYear: 2018,
+        day: 7, 
         hours: 6,
         minutes: 30,
         ampm: "AM",
+        description: "",
        appointments: [
          {
            apmtDesc: "dentist appointment",
-           dayOfWeek: "Monday",
            apmtMonth: "January",
-           dayOfMonth: 12,
+           apmtDay: 12,
            apmtYear: 2018,
            apmtHours: 4,
            apmtMinutes: 30,
+           apmtAmpm: "PM"
+         },
+         {
+           apmtDesc: "house party",
+           apmtMonth: "June",
+           apmtDay: 23,
+           apmtYear: 2019,
+           apmtHours: 6,
+           apmtMinutes: 15,
            apmtAmpm: "PM"
          }
        ]
@@ -141,22 +157,46 @@ import AMPMSelector from './components/AMPMSelector';
       }
     };
 
+
+    setDesc = (e,props) => {
+      e.preventDefault();
+      this.setState( ({
+        description: e.target.description.value
+      }));
+    }
+
+    handleDayChange = (props) => {
+      let day = this.props.number;
+      this.setState({
+        day: day
+      });
+      console.log(day);
+    }
+
+
+
     addAppointment = (e, props) => {
       e.preventDefault();
-      let newApmt = {
-           apmtDesc: document.getElementById("description").value,
-           dayOfWeek: "Monday",
-           apmtMonth: "January",
-           dayOfMonth: 12,
-           apmtYear: 2018,
-           apmtHours: 4,
-           apmtMinutes: 30,
-           apmtAmpm: "PM"
+      if(this.state.description) {
+      const newApmt = [
+        {
+           apmtDesc: this.state.description,
+           apmtDay: this.state.day,
+           apmtMonth: this.state.currentMonth,
+           dayOfMonth: this.state.day,
+           apmtYear: this.state.currentYear,
+           apmtHours: this.state.hours,
+           apmtMinutes: this.state.minutes,
+           apmtAmpm: this.state.ampm
     }
+  ]
     this.setState(prevState => ({
-      appointments: prevState.appointments.push(newApmt)
+      appointments: prevState.appointments.concat(newApmt)
     }));
-    console.log(this.state.appointments);
+    console.log(this.state.description);
+  } else {
+    alert("A description of the appointment is required.");
+  }
   }
 
 
@@ -180,7 +220,7 @@ import AMPMSelector from './components/AMPMSelector';
         <div className="text-center">
         <h1>React Calendar</h1>
         <h2>Make a new appointment</h2>
-        <Description />
+        <Description setDesc={this.setDesc} />
         <MonthSelector currentMonth={this.state.currentMonth}
         month={this.state.month} 
         goToNextMonth={this.goToNextMonth}
@@ -191,7 +231,14 @@ import AMPMSelector from './components/AMPMSelector';
         <Month currentMonth={this.state.currentMonth} 
         currentYear={this.state.currentYear}
         goToLastMonth={this.goToLastMonth}
-        goToNextMonth={this.goToNextMonth} />
+        goToNextMonth={this.goToNextMonth}  
+        day={this.state.day} 
+        handleDayChange={this.handleDayChange}
+        week1={this.state.week1}
+        week2={this.state.week2}
+        week3={this.state.week3}
+        week4={this.state.week4}
+        week5={this.state.week5}/>
         <TimeSelector hours={this.state.hours}
         minutes={this.state.minutes} 
         ampm={this.state.ampm} 
@@ -202,8 +249,23 @@ import AMPMSelector from './components/AMPMSelector';
         <AMPMSelector ampm={this.state.ampm}
         setAM={this.setAM}
         setPM={this.setPM} />
-        <Button addAppointment={this.addAppointment} />
-        <AppointmentList appointments={this.state.appointments} />
+        <Button addAppointment={this.addAppointment} 
+        currentMonth={this.state.currentMonth}
+        currentYear={this.state.currentYear}
+        day={this.state.day}
+        hours={this.state.hours}
+        minutes={this.state.minutes}
+        ampm={this.state.ampm}
+        description={this.state.description}/>
+        <AppointmentList appointments={this.state.appointments} 
+        apmtMonth={this.state.currentMonth}
+        apmtDay={this.state.day}
+        apmtYear={this.state.currentYear}
+        apmtHours={this.state.hours}
+        apmtMinutes={this.state.minutes}
+        apmtAmpm={this.state.ampm}
+        apmtDesc={this.state.description} 
+        />
       </div>
        )
       }

@@ -1,10 +1,12 @@
-import React, {Component} from "react";
+import React from "react";
 
 const Button = (props) => {
     return(
       <div>
-        <form onSubmit={props.addAppointment}>
-          <button className="btn btn-danger">Make Appointment</button>
+        <form onSubmit={(e) => props.addAppointment(e)}>
+          <button className="btn btn-danger">
+            Make Appointment
+          </button>
         </form>
         <br />
       </div>
